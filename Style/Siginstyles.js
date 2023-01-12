@@ -44,4 +44,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonStyle: {
+    backgroundColor: '#00cc44',
+    marginRight: 100,
+    marginLeft: 100,
+    marginTop: 30,
+    marginBottom: 5,
+  },
 });

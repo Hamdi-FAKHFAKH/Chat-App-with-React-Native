@@ -11,8 +11,9 @@ import { FragmentHeaderstyles } from '../Style/FragmentHeaderstyles';
 import { Avatar } from '@rneui/themed';
 import initfirebase from '../config';
 import { getAuth } from 'firebase/auth';
+import { styles } from '../Style/ChatStyle';
 export default function Chat({ route, navigation }) {
-  //------------------------------- ---------------------------------- UseState ----------------------------------------------------
+  //------------------------------- ---------------------------------- UseStates ----------------------------------------------------
   const [msg, setmsg] = useState();
   const [data, setdata] = useState([]);
   const [currentUserEmail, setcurrentUserEmail] =
@@ -21,7 +22,8 @@ export default function Chat({ route, navigation }) {
   const database = initfirebase.database();
   const auth = getAuth();
   const flatList = React.useRef(null);
-  // ---------------------------------------------------------------- Function ----------------------------------------------------------------
+  // ---------------------------------------------------------------- Functions ----------------------------------------------------------------
+  //get all messages from firebase
   const getalldata = async () => {
     let currentUserEmail = await auth.currentUser.email;
     currentUserEmail = currentUserEmail
@@ -51,14 +53,7 @@ export default function Chat({ route, navigation }) {
   // ---------------------------------------------------------------- Render ----------------------------------------------------------------
   return (
     <View style={{ height: '100%' }}>
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: '#4682B4',
-        }}
-      >
+      <View style={styles.view1}>
         <Text style={FragmentHeaderstyles.textStyle}>
           Chat
         </Text>
@@ -82,11 +77,7 @@ export default function Chat({ route, navigation }) {
         onContentSizeChange={() => {
           flatList.current.scrollToEnd();
         }}
-        style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: '#AEBDCA',
-        }}
+        style={styles.flatListStyle}
         data={data}
         renderItem={({ item }) => (
           <View
@@ -110,16 +101,7 @@ export default function Chat({ route, navigation }) {
             >
               {item.sender}
             </Text>
-            <Text
-              style={{
-                backgroundColor: '#5DA7DB',
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                color: '#fff',
-                textAlign: 'center',
-              }}
-            >
+            <Text style={styles.textMsgStyle}>
               {' '}
               {item.msg}
             </Text>
@@ -136,16 +118,7 @@ export default function Chat({ route, navigation }) {
           placeholder="Enter your Message"
           cursorColor="#4682B4"
           selectionColor="#4682B4"
-          style={{
-            height: 40,
-            color: 'black',
-            width: '100%',
-            backgroundColor: '#AEBDCA',
-            borderColor: 'black',
-            borderTopWidth: 1,
-            paddingTop: 5,
-            borderBottomColor: '#000000',
-          }}
+          style={styles.textInputStyle}
           theme={{ colors: '#000000' }}
           onChangeText={(e) => setmsg(e)}
           value={msg}
@@ -162,10 +135,6 @@ export default function Chat({ route, navigation }) {
             marginLeft: -100,
           }}
           onPress={() => {
-            // setdata((data) => [
-            //   ...data,
-            //   { sender: currentUserEmail, msg: msg },
-            // ]);
             setmsg('');
             if (msg != '') {
               database.ref('tablemsg').push({
@@ -180,9 +149,3 @@ export default function Chat({ route, navigation }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-    marginHorizontal: 20,
-  },
-});

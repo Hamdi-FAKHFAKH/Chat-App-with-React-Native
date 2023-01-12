@@ -98,13 +98,7 @@ export default function Sigin(props) {
                   alert('verifiez vos donnée');
                 }
               }}
-              style={{
-                backgroundColor: '#00cc44',
-                marginRight: 100,
-                marginLeft: 100,
-                marginTop: 30,
-                marginBottom: 5,
-              }}
+              style={styles.buttonStyle}
             >
               <Text style={{ color: 'white' }}>
                 Sign Up
